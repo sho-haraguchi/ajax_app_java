@@ -22,12 +22,17 @@ public class PostController {
   private final PostRepository postRepository;
 
   // 【表示】トップページ（/）にアクセスされた時の処理
+  // 【表示】トップページ（/）にアクセスされた時の処理
   @GetMapping("/")
   public String showList(Model model) {
     // 1. 倉庫（DB）からすべての投稿データを取ってくる
     var postList = postRepository.findAll();
     // 2. 取ってきたデータを、HTML側で「postList」という名前で使えるようにセットする
     model.addAttribute("postList", postList);
+    
+    // 💡【ココを追加！】HTMLのフォーム用に、空の「PostForm」の器を渡してあげる
+    model.addAttribute("postForm", new PostForm());
+
     // 3. index.htmlを表示する
     return "posts/index";
   }
